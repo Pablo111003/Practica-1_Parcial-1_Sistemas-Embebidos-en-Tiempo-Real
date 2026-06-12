@@ -7,9 +7,6 @@ del planificador de tareas. Ademas de esto, se añadio un temporizador el cual r
 primer tarea para repetir de forma indefinida el ciclo
 
 
-(Tomar screenshot de los estados del codigo)
-
-
 # Conclusiones:
 En esta practica pude comprender el funcionamiento basico de FreeRTOS, junto con funciones como lo son la creacion de tareas, la asignación de prioridades, los retardos, las
 suspenciones, y la reanudación de tareas. Ademas de esto, pude ver como es que dentro de un sistema embebido, pueden haber varias tareas trabajando de forma paralela

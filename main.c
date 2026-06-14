@@ -68,7 +68,7 @@ void vTaskSensor(void *pv) // Detecta el boton, luego lee el ADC, y le da los da
                 int raw = 0;
                 adc_oneshot_read(adc_handle, ADC_CHANNEL, &raw); // Obtiene la lectura del ADC
                 float voltaje = (raw * 3.3f) / 4095.0f; // Convierte el valor el voltaje
-                printf("[SENS] ADC: %.2fV\n", voltaje); // Imprime el voltaje
+                printf("[SENS] ADC Raw: %d | Voltaje: %.2f V\n", raw, voltaje); // Imprime el voltaje
 
                 g_botonPres = true;
                 vTaskResume(hMonitor);
@@ -84,7 +84,7 @@ void vTaskMonitor(void *pv) // Controla la secuencia principal del sistema
 {
     while (1) {
         // Etapa 1: LED rápido, 5 segundos
-        printf("[MON] Modo RAPIDO\n");
+        printf("[LED_R] Modo RAPIDO\n");
         g_botonPres = false;
         vTaskResume(hLedRapido); // Activa la tarea de LED rapido
         vTaskDelay(pdMS_TO_TICKS(5000)); // Mantiene la tarea durante 5 segundos
@@ -92,14 +92,14 @@ void vTaskMonitor(void *pv) // Controla la secuencia principal del sistema
         gpio_set_level(LED_PIN, 0);
 
         // Etapa 2: LED lento, 5 segundos
-        printf("[MON] Modo LENTO\n");
+        printf("[LED_L] Modo LENTO\n");
         vTaskResume(hLedLento);
         vTaskDelay(pdMS_TO_TICKS(5000));
         vTaskSuspend(hLedLento);
         gpio_set_level(LED_PIN, 0);
 
         // Etapa 3: Idle, máximo 5 segundos
-        printf("[MON] Modo IDLE - esperando boton...\n"); // Espera un evento del botón o un timeout
+        printf("[IDLE] Modo IDLE - esperando boton...\n"); // Espera un evento del botón o un timeout
         g_sensorActivo = true; // Habilita la detección del botón
         g_botonPres    = false;
 
